@@ -9,12 +9,22 @@
     <Page.Resources>
         <ControlTemplate x:Key="EnemyTemplate" TargetType="ContentControl">
             <Grid>
-                <Ellipse Fill="Red" Height="100" Stroke="Black" Width="100" />
+                <Ellipse Fill="Gray" Height="100" Stroke="Black" Width="75" />
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Stroke="Black" VerticalAlignment="Top" Width="25" Margin="40,20,70,0" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <CompositeTransform SkewX="10" />
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Stroke="Black" VerticalAlignment="Top" Width="25" Margin="70,20,40,0" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                    <Ellipse.RenderTransform>
+                        <CompositeTransform SkewX="-10" />
+                    </Ellipse.RenderTransform>
+                </Ellipse>
             </Grid>
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160" />
             <ColumnDefinition />
@@ -26,23 +36,23 @@
         </Grid.RowDefinitions>
         <Button x:Name="startButton" Content="Başla!" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Click="startButton_Click" />
         <StackPanel Grid.Column="2" Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Avoid These" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Avoid These" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26.667" FontWeight="Bold" />
             <ContentControl Content="ContentControl" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{StaticResource EnemyTemplate}" />
         </StackPanel>
-        <ProgressBar Grid.Column="1" Grid.Row="1" Height="20" />
-        <Canvas x:Name="playArea" Margin="0" Grid.ColumnSpan="3">
+        <ProgressBar x:Name="progressBar" Grid.Column="1" Grid.Row="1" Height="20" />
+        <Canvas x:Name="playArea" Grid.ColumnSpan="3" PointerMoved="playArea_PointerMoved" PointerExited="playArea_PointerExited">
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Cyan" Offset="0" />
                     <GradientStop Color="#FF0E9C00" Offset="1" />
                 </LinearGradientBrush>
             </Canvas.Background>
-            <StackPanel x:Name="human" Orientation="Vertical">
+            <StackPanel x:Name="human" Orientation="Vertical" PointerPressed="human_PointerPressed">
                 <Ellipse Fill="White" Height="10" Width="10" Stroke="Black" />
                 <Rectangle Fill="White" Height="25" Width="10" Stroke="Black" />
             </StackPanel>
             <TextBlock x:Name="gameOverText" TextWrapping="Wrap" Text="Game Over" FontFamily="Arial Black" FontSize="100" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="702" Canvas.Top="421" />
-            <Rectangle x:Name="target" Height="50" Canvas.Left="1450" Stroke="Black" Canvas.Top="225" Width="50" RenderTransformOrigin="0.5,0.5">
+            <Rectangle x:Name="target" Height="50" Canvas.Left="1450" Stroke="Black" Canvas.Top="225" Width="50" RenderTransformOrigin="0.5,0.5" PointerEntered="target_PointerEntered">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="45" />
                 </Rectangle.RenderTransform>
